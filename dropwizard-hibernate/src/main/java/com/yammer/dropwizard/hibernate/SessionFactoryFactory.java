@@ -9,6 +9,8 @@ import com.yammer.dropwizard.db.ManagedDataSourceFactory;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.ejb.event.JpaIntegrator;
+import org.hibernate.service.BootstrapServiceRegistryBuilder;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 import org.hibernate.service.jdbc.connections.internal.DatasourceConnectionProviderImpl;
@@ -68,8 +70,8 @@ public class SessionFactoryFactory {
         }
 
         addAnnotatedClasses(configuration, entities);
-
-        final ServiceRegistry registry = new ServiceRegistryBuilder()
+        BootstrapServiceRegistryBuilder builder = new BootstrapServiceRegistryBuilder();
+        final ServiceRegistry registry = new ServiceRegistryBuilder(builder.with(new JpaIntegrator()).build())
                 .addService(ConnectionProvider.class, connectionProvider)
                 .applySettings(properties)
                 .buildServiceRegistry();

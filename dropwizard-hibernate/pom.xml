@@ -8,6 +8,7 @@
         <version>0.6.2</version>
     </parent>
 
+    <version>0.6.2.fk</version>
     <artifactId>dropwizard-hibernate</artifactId>
     <name>Dropwizard Hibernate Support</name>
 
@@ -15,7 +16,7 @@
         <dependency>
             <groupId>com.yammer.dropwizard</groupId>
             <artifactId>dropwizard-db</artifactId>
-            <version>${project.version}</version>
+            <version>0.6.2</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
@@ -47,6 +48,11 @@
             <version>4.1.9.Final</version>
         </dependency>
         <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>4.1.9.Final</version>
+        </dependency>
+        <dependency>
             <groupId>hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
             <version>1.8.0.10</version>
@@ -63,6 +69,11 @@
             <artifactId>jersey-test-framework-inmemory</artifactId>
             <version>${jersey.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.9.9-RC1</version>
         </dependency>
     </dependencies>
 </project>
