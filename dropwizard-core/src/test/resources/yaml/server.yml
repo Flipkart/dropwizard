@@ -7,9 +7,13 @@ requestLog:
       archivedFileCount: 5
 gzip:
   enabled: false
+serverPush:
+  enabled: true
+  refererHosts: ["dropwizard.io"]
+  refererPorts: [8445]
 applicationConnectors:
   - type: http
-    port: 9080
+    port: 0
     bindHost: "localhost"
     acceptorThreads: 2
     acceptQueueSize: 100
@@ -20,3 +24,5 @@ applicationConnectors:
     useForwardedHeaders: false
 minThreads: 89
 maxThreads: 101
+applicationContextPath: /app
+adminContextPath: /admin

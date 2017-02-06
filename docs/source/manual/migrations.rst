@@ -15,17 +15,17 @@ Configuration
 =============
 
 Like :ref:`man-jdbi`, your :ref:`configuration class <man-core-configuration>` needs a
-``DatabaseConfiguration`` instance:
+``DataSourceFactory`` instance:
 
 .. code-block:: java
 
     public class ExampleConfiguration extends Configuration {
         @Valid
         @NotNull
-        @JsonProperty
-        private DatabaseConfiguration database = new DatabaseConfiguration();
+        private DataSourceFactory database = new DataSourceFactory();
 
-        public DatabaseConfiguration getDatabaseConfiguration() {
+        @JsonProperty("database")
+        public DataSourceFactory getDataSourceFactory() {
             return database;
         }
     }
@@ -33,16 +33,16 @@ Like :ref:`man-jdbi`, your :ref:`configuration class <man-core-configuration>` n
 Adding The Bundle
 =================
 
-Then, in your service's ``initialize`` method, add a new ``MigrationsBundle`` subclass:
+Then, in your application's ``initialize`` method, add a new ``MigrationsBundle`` subclass:
 
 .. code-block:: java
 
     @Override
-    public void initialize(Bootstrap<MyConfiguration> bootstrap) {
-        bootstrap.addBundle(new MigrationsBundle<MyConfiguration>() {
+    public void initialize(Bootstrap<ExampleConfiguration> bootstrap) {
+        bootstrap.addBundle(new MigrationsBundle<ExampleConfiguration>() {
             @Override
-            public DatabaseConfiguration getDatabaseConfiguration(MyConfiguration configuration) {
-                return configuration.getDatabaseConfiguration();
+            public DataSourceFactory getDataSourceFactory(ExampleConfiguration configuration) {
+                return configuration.getDataSourceFactory();
             }
         });
     }
@@ -51,10 +51,11 @@ Defining Migrations
 ===================
 
 Your database migrations are stored in your Dropwizard project, in
-``src/main/resources/migrations.xml``. This file will be packaged with your service, allowing you to
-run migrations using your service's command-line interface.
+``src/main/resources/migrations.xml``. This file will be packaged with your application, allowing you to
+run migrations using your application's command-line interface. You can change the name of the migrations
+file used by overriding the ``getMigrationsFileName()`` method in ``MigrationsBundle``.
 
-For example, to create a new ``people`` table, I might create an initial ``migrations.xml`` like
+For example, to create a new ``people`` table, you might create an initial ``migrations.xml`` like
 this:
 
 .. code-block:: xml
@@ -65,7 +66,7 @@ this:
             xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-             http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+             http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
         <changeSet id="1" author="codahale">
             <createTable tableName="people">
@@ -101,7 +102,7 @@ document, you can run the ``db dump`` command:
 
     java -jar hello-world.jar db dump helloworld.yml
 
-This will output a Liquibase_ change log with a change set capable of recreating your database.
+This will output a Liquibase_ change log with a changeset capable of recreating your database.
 
 Tagging Your Schema
 ===================
@@ -116,7 +117,7 @@ To tag your schema at a particular point in time (e.g., to make rolling back eas
 Migrating Your Schema
 =====================
 
-To apply pending change sets to your database schema, run the ``db migrate`` comnand:
+To apply pending changesets to your database schema, run the ``db migrate`` command:
 
 .. code-block:: text
 
@@ -129,13 +130,13 @@ To apply pending change sets to your database schema, run the ``db migrate`` com
 
 .. note::
 
-    To apply only a specific number of pending change sets, use the ``--count`` flag.
+    To apply only a specific number of pending changesets, use the ``--count`` flag.
 
 Rolling Back Your Schema
 ========================
 
-To roll back change sets which have already been applied, run the ``db rollback`` command. You will
-need to specify either a **tag**, a **date**, or a **number of change sets** to roll back to:
+To roll back changesets which have already been applied, run the ``db rollback`` command. You will
+need to specify either a **tag**, a **date**, or a **number of changesets** to roll back to:
 
 .. code-block:: text
 
@@ -149,7 +150,7 @@ need to specify either a **tag**, a **date**, or a **number of change sets** to 
 Testing Migrations
 ==================
 
-To verify that a set of pending change sets can be fully rolled back, use the ``db test`` command,
+To verify that a set of pending changesets can be fully rolled back, use the ``db test`` command,
 which will migrate forward, roll back to the original state, then migrate forward again:
 
 .. code-block:: text
@@ -163,14 +164,14 @@ which will migrate forward, roll back to the original state, then migrate forwar
 Preparing A Rollback Script
 ===========================
 
-To prepare a rollback script for pending change sets *before* they have been applied, use the
+To prepare a rollback script for pending changesets *before* they have been applied, use the
 ``db prepare-rollback`` command:
 
 .. code-block:: text
 
     java -jar hello-world.jar db prepare-rollback helloworld.yml
 
-This will output a DDL script to stdout capable of rolling back all unapplied change sets.
+This will output a DDL script to stdout capable of rolling back all unapplied changesets.
 
 Generating Documentation
 ========================
@@ -196,21 +197,123 @@ To drop all objects in the database, use the ``db drop-all`` command:
     You need to specify the ``--confirm-delete-everything`` flag because this command **deletes
     everything in the database**. Be sure you want to do that first.
 
-Fast-Forwarding Through A Change Set
+Fast-Forwarding Through A Changeset
 ====================================
 
-To mark a pending change set as applied (e.g., after having backfilled your ``migrations.xml`` with
+To mark a pending changeset as applied (e.g., after having backfilled your ``migrations.xml`` with
 ``db dump``), use the ``db fast-forward`` command:
 
 .. code-block:: text
 
      java -jar hello-world.jar db fast-forward helloworld.yml
 
-This will mark the next pending change set as applied. You can also use the ``--all`` flag to mark
-all pending change sets as applied.
+This will mark the next pending changeset as applied. You can also use the ``--all`` flag to mark
+all pending changesets as applied.
+
+Support For Adding Multiple Migration Bundles
+=============================================
+
+Assuming migrations need to be done for two different databases, you would need to have two different data source factories:
+
+.. code-block:: java
+
+    public class ExampleConfiguration extends Configuration {
+        @Valid
+        @NotNull
+        private DataSourceFactory database1 = new DataSourceFactory();
+
+        @Valid
+        @NotNull
+        private DataSourceFactory database2 = new DataSourceFactory();
+
+        @JsonProperty("database1")
+        public DataSourceFactory getDb1DataSourceFactory() {
+            return database1;
+        }
+
+        @JsonProperty("database2")
+        public DataSourceFactory getDb2DataSourceFactory() {
+            return database2;
+        }
+    }
+
+Now multiple migration bundles can be added with unique names like so:
+
+.. code-block:: java
+
+    @Override
+    public void initialize(Bootstrap<ExampleConfiguration> bootstrap) {
+        bootstrap.addBundle(new MigrationsBundle<ExampleConfiguration>() {
+            @Override
+            public DataSourceFactory getDataSourceFactory(ExampleConfiguration configuration) {
+                return configuration.getDb1DataSourceFactory();
+            }
+
+            @Override
+            public String name() {
+                return "db1";
+            }
+        });
+
+        bootstrap.addBundle(new MigrationsBundle<ExampleConfiguration>() {
+            @Override
+            public DataSourceFactory getDataSourceFactory(ExampleConfiguration configuration) {
+                return configuration.getDb2DataSourceFactory();
+            }
+
+            @Override
+            public String name() {
+                return "db2";
+            }
+        });
+    }
+
+To migrate your schema:
+
+.. code-block:: text
+
+    java -jar hello-world.jar db1 migrate helloworld.yml
+
+and
+
+.. code-block:: text
+
+    java -jar hello-world.jar db2 migrate helloworld.yml
+
+.. note::
+
+    Whenever a name is added to a migration bundle, it becomes the command that needs to be run at the command line.
+    eg: To check the state of your database, use the ``status`` command:
+
+.. code-block:: text
+
+    java -jar hello-world.jar db1 status helloworld.yml
+
+or
+
+.. code-block:: text
+
+    java -jar hello-world.jar db2 status helloworld.yml
+
+By default the migration bundle uses the "db" command. By overriding you can customize it to provide any name you want
+and have multiple migration bundles. Wherever the "db" command was being used, this custom name can be used.
+
+There will also be a need to provide different change log migration files as well. This can be done as
+
+.. code-block:: text
+
+    java -jar hello-world.jar db1 migrate helloworld.yml --migrations <path_to_db1_migrations.xml>
+
+.. code-block:: text
+
+    java -jar hello-world.jar db2 migrate helloworld.yml --migrations <path_to_db2_migrations.xml>
 
 More Information
 ================
+
+If you are using databases supporting multiple schemas like PostgreSQL, Oracle, or H2, you can use the
+optional ``--catalog`` and ``--schema`` arguments to specify the database catalog and schema used for the
+Liquibase commands.
 
 For more information on available commands, either use the ``db --help`` command, or for more
 detailed help on a specific command, use ``db <cmd> --help``.

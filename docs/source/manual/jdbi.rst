@@ -15,17 +15,22 @@ Configuration
 =============
 
 To create a :ref:`managed <man-core-managed>`, instrumented ``DBI`` instance, your
-:ref:`configuration class <man-core-configuration>` needs a ``DatabaseConfiguration`` instance:
+:ref:`configuration class <man-core-configuration>` needs a ``DataSourceFactory`` instance:
 
 .. code-block:: java
 
     public class ExampleConfiguration extends Configuration {
         @Valid
         @NotNull
-        @JsonProperty
-        private DatabaseConfiguration database = new DatabaseConfiguration();
+        private DataSourceFactory database = new DataSourceFactory();
 
-        public DatabaseConfiguration getDatabaseConfiguration() {
+        @JsonProperty("database")
+        public void setDataSourceFactory(DataSourceFactory factory) {
+            this.database = factory;
+        }
+
+        @JsonProperty("database")
+        public DataSourceFactory getDataSourceFactory() {
             return database;
         }
     }
@@ -35,19 +40,16 @@ Then, in your service's ``run`` method, create a new ``DBIFactory``:
 .. code-block:: java
 
     @Override
-    public void run(ExampleConfiguration config,
-                    Environment environment) throws ClassNotFoundException {
+    public void run(ExampleConfiguration config, Environment environment) {
         final DBIFactory factory = new DBIFactory();
-        final DBI jdbi = factory.build(environment, config.getDatabaseConfiguration(), "postgresql");
+        final DBI jdbi = factory.build(environment, config.getDataSourceFactory(), "postgresql");
         final UserDAO dao = jdbi.onDemand(UserDAO.class);
-        environment.addResource(new UserResource(dao));
+        environment.jersey().register(new UserResource(dao));
     }
 
 This will create a new :ref:`managed <man-core-managed>` connection pool to the database, a
 :ref:`health check <man-core-healthchecks>` for connectivity to the database, and a new ``DBI``
-instance for you to use. Note the ``ClassNotFoundException`` is thrown by the ``DBIFactory`` class
-when the ``build`` method is unable to locate the JDBC driver class. This will cause the service to
-exit displaying the output of the exception.
+instance for you to use.
 
 Your service's configuration file will then look like this:
 
@@ -76,6 +78,9 @@ Your service's configuration file will then look like this:
       # the SQL query to run when validating a connection's liveness
       validationQuery: "/* MyService Health Check */ SELECT 1"
 
+      # the timeout before a connection validation queries fail
+      validationQueryTimeout: 3s
+
       # the minimum number of connections to keep open
       minSize: 8
 
@@ -85,11 +90,11 @@ Your service's configuration file will then look like this:
       # whether or not idle connections should be validated
       checkConnectionWhileIdle: false
 
-      # how long a connection must be held before it can be validated
-      checkConnectionHealthWhenIdleFor: 10s
+      # the amount of time to sleep between runs of the idle connection validation, abandoned cleaner and idle pool resizing
+      evictionInterval: 10s
 
-      # the maximum lifetime of an idle connection
-      closeConnectionIfIdleFor: 1 minute
+      # the minimum amount of time an connection must sit idle in the pool before it is eligible for eviction
+      minIdleTime: 1 minute
 
 Usage
 =====
@@ -120,8 +125,8 @@ code (e.g., ``ResultSet`` -> domain objects) into testable, reusable classes.
 Exception Handling
 ==================
 
-By adding the ``DBIExceptionsBundle`` to your :ref:`service <man-core-service>`, your Dropwizard
-application will automatically unwrap any thrown ``SQLException`` or ``DBIException`` instances.
+By adding the ``DBIExceptionsBundle`` to your :ref:`application <man-core-application>`, Dropwizard
+will automatically unwrap any thrown ``SQLException`` or ``DBIException`` instances.
 This is critical for debugging, since otherwise only the common wrapper exception's stack trace is
 logged.
 
@@ -140,8 +145,15 @@ automatically prepend the SQL object's class and method name to the SQL query as
 
 This will allow you to quickly determine the origin of any slow or misbehaving queries.
 
-Guava Support
-=============
+Library Support
+===============
 
-``dropwizard-jdbi`` supports ``Optional<T>`` arguments and ``ImmutableList<T>`` and
-``ImmutableSet<T>`` query results.
+``dropwizard-jdbi`` supports a number of popular libraries data types that can be automatically
+serialized into the appropriate SQL type. Here's a list of what integration ``dropwizard-jdbi``
+provides:
+
+* Guava: support for ``Optional<T>`` arguments and ``ImmutableList<T>`` and ``ImmutableSet<T>`` query results.
+* Joda Time: support for ``DateTime`` arguments and ``DateTime`` fields in query results
+* Java 8: support for ``Optional<T>`` and kin (``OptionalInt``, etc.) arguments and java.time_ arguments.
+
+.. _java.time: https://docs.oracle.com/javase/8/docs/api/java/time/package-summary.html

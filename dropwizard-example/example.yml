@@ -1,12 +1,12 @@
 template: Hello, %s!
 
-defaultName: Stranger
+defaultName: ${DW_DEFAULT_NAME:-Stranger}
 
 # Database settings.
 database:
 
   # the name of your JDBC driver
-  driverClass: org.hsqldb.jdbc.JDBCDriver
+  driverClass: org.h2.Driver
 
   # the username
   user: sa
@@ -15,11 +15,7 @@ database:
   password: sa
 
   # the JDBC URL
-  url: jdbc:hsqldb:target/example
-
-  # override health check query for hsqldb
-  # taken from http://javasplitter.blogspot.com/2011/01/keep-alive-query-in-hsqldb.html
-  validationQuery: SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES
+  url: jdbc:h2:./target/example
 
 # use the simple server factory if you only want to run on a single port
 #server:
@@ -29,28 +25,27 @@ database:
 #    port: 8080
 
 server:
+#  softNofileLimit: 1000
+#  hardNofileLimit: 1000
   applicationConnectors:
     - type: http
       port: 8080
     - type: https
       port: 8443
-      keyStore: example.keystore
+      keyStorePath: example.keystore
       keyStorePassword: example
-      validateCerts: false
-# this requires the npn-boot library on the JVM's boot classpath
-#    - type: spdy
-#      port: 8445
-#      keyStore: example.keystore
-#      keyStorePassword: example
-#      validateCerts: false
+    #this requires the alpn-boot library on the JVM's boot classpath
+    #- type: h2
+    #  port: 8445
+    #  keyStorePath: example.keystore
+    #  keyStorePassword: example
   adminConnectors:
     - type: http
       port: 8081
     - type: https
       port: 8444
-      keyStore: example.keystore
+      keyStorePath: example.keystore
       keyStorePassword: example
-      validateCerts: false
 
 # Logging settings.
 logging:
@@ -64,7 +59,35 @@ logging:
     # Sets the level for 'com.example.app' to DEBUG.
     com.example.app: DEBUG
 
-    org.hibernate.SQL: ALL
+    # Redirects SQL logs to a separate file
+    org.hibernate.SQL:
+      level: DEBUG
+
+# Logback's Time Based Rolling Policy - archivedLogFilenamePattern: /tmp/application-%d{yyyy-MM-dd}.log.gz
+# Logback's Size and Time Based Rolling Policy -  archivedLogFilenamePattern: /tmp/application-%d{yyyy-MM-dd}-%i.log.gz
+# Logback's Fixed Window Rolling Policy -  archivedLogFilenamePattern: /tmp/application-%i.log.gz
 
   appenders:
     - type: console
+    - type: file
+      threshold: INFO
+      logFormat: "%-6level [%d{HH:mm:ss.SSS}] [%t] %logger{5} - %X{code} %msg %n"
+      currentLogFilename: /tmp/application.log
+      archivedLogFilenamePattern: /tmp/application-%d{yyyy-MM-dd}-%i.log.gz
+      archivedFileCount: 7
+      timeZone: UTC
+      maxFileSize: 10MB
+
+# the key needs to match the suffix of the renderer
+viewRendererConfiguration:
+    .ftl:
+        strict_syntax: yes
+        whitespace_stripping: yes
+
+metrics:
+  reporters:
+    - type: graphite
+      host: localhost
+      port: 2003
+      prefix: example
+      frequency: 1m

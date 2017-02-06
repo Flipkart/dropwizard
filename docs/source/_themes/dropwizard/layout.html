@@ -93,7 +93,9 @@
                 {{ toctree(maxdepth=-1) }}
                 <hr/>
                 <ul>
-                    <li><a href="{{theme_mailing_list}}">Mailing List</a></li>
+                    <li><a href="{{theme_maven_site}}">Maven Site</a></li>
+                    <li><a href="{{theme_mailing_list_user}}">User Mailing List</a></li>
+                    <li><a href="{{theme_mailing_list_dev}}">Developer Mailing List</a></li>
                 </ul>
             </div>
             {%- endif %}
@@ -104,6 +106,7 @@
         </div>
         <hr/>
         <footer>
+            <p style="float: left">
             {%- if show_copyright %}
             {%- if hasdoc('copyright') %}
             {% trans path=pathto('copyright'), copyright=copyright|e %}&copy; <a href="{{ path }}">Copyright</a>
@@ -119,6 +122,8 @@
             {% trans sphinx_version=sphinx_version|e %}Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>
             {{ sphinx_version }}.{% endtrans %}
             {%- endif %}
+            </p>
+            <p style="float: right">Dropwizard v{{ release }}</p>
         </footer>
     </div>
 </body>

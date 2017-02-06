@@ -4,55 +4,458 @@
 Release Notes
 #############
 
+.. _rel-1.1.0:
+
+v1.1.0: Unreleased
+==================
+
+* Add runtime certificate reload via admin task `#1799 <https://github.com/dropwizard/dropwizard/pull/1799>`_
+* Invalid enum request parameters result in 400 response with possible choices `#1734 <https://github.com/dropwizard/dropwizard/pull/1734>`_
+* Enum request parameters are deserialized in the same fuzzy manner, as the request body `#1734 <https://github.com/dropwizard/dropwizard/pull/1734>`_
+* Request parameter name displayed in response to parse failure `#1734 <https://github.com/dropwizard/dropwizard/pull/1734>`_
+* Add ``DurationParam`` as a possible request parameter `#1734 <https://github.com/dropwizard/dropwizard/pull/1734>`_
+* Add ``SizeParam`` as a possible request parameter `#1751 <https://github.com/dropwizard/dropwizard/pull/1751>`_
+* Allow overriding of a default ``ExceptionMapper`` without re-registering all other defaults `#1768 <https://github.com/dropwizard/dropwizard/pull/1768>`_
+* Allow overriding of default ``JsonProvider`` `#1788 <https://github.com/dropwizard/dropwizard/pull/1788>`_
+* Finer-grain control of exception behaviour in view renderers `#1820 <https://github.com/dropwizard/dropwizard/pull/1820>`_
+* Default ``WebApplicationException`` handler preserves exception HTTP headers `#1912 <https://github.com/dropwizard/dropwizard/pull/1912>`_
+* JerseyClientBuilder can create rx-capable client `#1721 <https://github.com/dropwizard/dropwizard/pull/1721>`_
+* Configurable response for empty `Optional` return values `#1784 <https://github.com/dropwizard/dropwizard/pull/1784>`_
+* Add web test container agnostic way of invoking requests in ``ResourceTestRule`` `#1778 <https://github.com/dropwizard/dropwizard/pull/1778>`_
+* Remove OptionalValidatedValueUnwrapper `#1583 <https://github.com/dropwizard/dropwizard/pull/1583>`_
+* Allow constraints to be applied to type `#1586 <https://github.com/dropwizard/dropwizard/pull/1586>`_
+* Use LoadingCache in CachingAuthenticator `#1615 <https://github.com/dropwizard/dropwizard/pull/1615>`_
+* Switch cert and peer validation to false by default `#1855 <https://github.com/dropwizard/dropwizard/pull/1855>`_
+* Introduce CachingAuthorizer `#1639 <https://github.com/dropwizard/dropwizard/pull/1639>`_
+* Enhance logging of registered endpoints `#1804 <https://github.com/dropwizard/dropwizard/pull/1804>`_
+* Allow to disable caching of Mustache views `#1289 <https://github.com/dropwizard/dropwizard/issues/1289>`_
+* Add the ``httpCompliance`` option to the HTTP configuration `#1825 <https://github.com/dropwizard/dropwizard/pull/1825>`_
+* Add the ``blockingTimeout`` option to the HTTP configuration `#1795 <https://github.com/dropwizard/dropwizard/pull/1795>`_
+* Add ``min`` and ``mins`` as valid ``Duration`` abbreviations `#1833 <https://github.com/dropwizard/dropwizard/pull/1833>`_
+* Register Jackson parameter-names modules `#1908 <https://github.com/dropwizard/dropwizard/pull/1908>`_
+* Native Jackson deserialization of enums when Jackson annotations are present `#1909 <https://github.com/dropwizard/dropwizard/pull/1909>`_
+* Add `JsonConfigurationFactory` for first-class support of the JSON configuration `#1897 <https://github.com/dropwizard/dropwizard/pull/1897>`_
+* Upgraded to Jackson 2.8.6
+* Upgraded to Hibernate Validator 5.3.4.Final
+* Upgraded to Jetty 9.4.1.v20170120 `#1901 <https://github.com/dropwizard/dropwizard/pull/1901>`_
+* Upgraded to tomcat-jdbc 8.5.9
+* Upgraded to Objenesis 2.4 `#1654 <https://github.com/dropwizard/dropwizard/pull/1654>`_
+* Upgraded to AssertJ 3.6.1
+* Upgraded to classmate 1.3.3
+* Upgraded to Mustache 0.9.4 `#1766 <https://github.com/dropwizard/dropwizard/pull/1766>`_
+* Upgraded to Mockito 2.6.1
+* Upgraded to Liquibase 3.5.3
+* Upgraded to Logback 1.1.8
+* Upgraded to JDBI 2.77
+* Upgraded to Jersey 2.25
+* Upgraded to javassist 3.21.0-GA
+* Upgraded to Guava 21.0
+* Upgraded to SLF4J 1.7.22
+* Upgraded to H2 1.4.193
+* Upgraded to Joda-Time 2.9.7
+* Upgraded to commons-lang3 3.5
+
+.. _rel-1.0.6:
+
+v1.0.6 Jan 30 2017
+==================
+
+* Switch cert and peer validation to false by default `#1855 <https://github.com/dropwizard/dropwizard/pull/1855>`_
+* Add a JUnit rule for testing database interactions `#1905 <https://github.com/dropwizard/dropwizard/pull/1905>`_
+
+.. _rel-1.0.5:
+
+v1.0.5 Nov 18 2016
+==================
+
+* Fix request logs with request parameter in layout pattern `#1828 <https://github.com/dropwizard/dropwizard/pull/1828>`_
+
+.. _rel-1.0.4:
+
+v1.0.4 Nov 14 2016
+==================
+
+* Upgraded to Jersey 2.23.2 `#1808 <https://github.com/dropwizard/dropwizard/pull/1808>`_
+* Brought back support for request logging with ``logback-classic`` `#1813 <https://github.com/dropwizard/dropwizard/pull/1813>`_
+
+.. _rel-1.0.3:
+
+v1.0.3: Oct 28 2016
+===================
+
+* Fix support maxFileSize and archivedFileCount `#1660 <https://github.com/dropwizard/dropwizard/pull/1660>`_
+* Upgraded to Jackson 2.7.8 `#1755 <https://github.com/dropwizard/dropwizard/pull/1755>`_
+* Upgraded to Mustache 0.9.4 `#1766 <https://github.com/dropwizard/dropwizard/pull/1766>`_
+* Prefer use of assertj's java8 exception assertions `#1753 <https://github.com/dropwizard/dropwizard/pull/1753>`_
+
+.. _rel-1.0.2:
+
+v1.0.2: Sep 23 2016
+===================
+
+* Fix absence of request logs in Dropwizard 1.0.1 `#1737 <https://github.com/dropwizard/dropwizard/pull/1737>`_
+
+.. _rel-1.0.1:
+
+v1.0.1: Sep 21 2016
+===================
+
+* Allow use of custom HostnameVerifier on clients `#1664 <https://github.com/dropwizard/dropwizard/pull/1664>`_
+* Allow to configure failing on unknown properties in the Dropwizard configuration `#1677 <https://github.com/dropwizard/dropwizard/pull/1677>`_
+* Fix request attribute-related race condition in Logback request logging `#1678 <https://github.com/dropwizard/dropwizard/pull/1678>`_
+* Log Jetty initialized SSLContext not the Default `#1698 <https://github.com/dropwizard/dropwizard/pull/1698>`_
+* Fix NPE of non-resource sub-resource methods `#1718 <https://github.com/dropwizard/dropwizard/pull/1718>`_
+
+.. _rel-1.0.0:
+
+v1.0.0: Jul 26 2016
+===================
+
+* Using Java 8 as baseline
+* ``dropwizard-java8`` bundle merged into mainline `#1365 <https://github.com/dropwizard/dropwizard/issues/1365>`_
+* HTTP/2 and server push support `#1349 <https://github.com/dropwizard/dropwizard/issues/1349>`_
+* ``dropwizard-spdy`` module is removed in favor of ``dropwizard-http2`` `#1330 <https://github.com/dropwizard/dropwizard/pull/1330>`_
+* Switching to ``logback-access`` for HTTP request logging `#1415 <https://github.com/dropwizard/dropwizard/pull/1415>`_
+* Support for validating return values in JAX-RS resources `#1251 <https://github.com/dropwizard/dropwizard/pull/1251>`_
+* Consistent handling null entities in JAX-RS resources `#1251 <https://github.com/dropwizard/dropwizard/pull/1251>`_
+* Support for validating bean members in JAX-RS resources `#1572 <https://github.com/dropwizard/dropwizard/pull/1572>`_
+* Returning an HTTP 500 error for entities that can't be serialized `#1347 <https://github.com/dropwizard/dropwizard/pull/1347>`_
+* Support serialisation of lazy loaded POJOs in Hibernate `#1466 <https://github.com/dropwizard/dropwizard/pull/1466>`_
+* Support fallback to the ``toString`` method during deserializing enum values from JSON  `#1340 <https://github.com/dropwizard/dropwizard/pull/1340>`_
+* Support for setting default headers in Apache HTTP client `#1354 <https://github.com/dropwizard/dropwizard/pull/1354>`_
+* Printing help once on invalid command line arguments `#1376 <https://github.com/dropwizard/dropwizard/pull/1376>`_
+* Support for case insensitive and all single letter ``SizeUnit`` suffixes `#1380 <https://github.com/dropwizard/dropwizard/pull/1380>`_
+* Added a development profile to the build `#1364 <https://github.com/dropwizard/dropwizard/issues/1364>`_
+* All the default exception mappers in ``ResourceTestRule`` are registered by default `#1387 <https://github.com/dropwizard/dropwizard/pull/1387>`_
+* Allow DB minSize and initialSize to be zero for lazy connections `#1517 <https://github.com/dropwizard/dropwizard/pull/1517>`_
+* Ability to provide own ``RequestLogFactory`` `#1290 <https://github.com/dropwizard/dropwizard/pull/1290>`_
+* Support for authentication by polymorphic principals `#1392 <https://github.com/dropwizard/dropwizard/pull/1392>`_
+* Support for configuring Jetty's ``inheritedChannel`` option `#1410 <https://github.com/dropwizard/dropwizard/pull/1410>`_
+* Support for using ``DropwizardAppRule`` at the suite level `#1411 <https://github.com/dropwizard/dropwizard/pull/1411>`_
+* Support for adding multiple ``MigrationBundles`` `#1430 <https://github.com/dropwizard/dropwizard/pull/1430>`_
+* Support for obtaining server context paths in the ``Application.run`` method `#1503 <https://github.com/dropwizard/dropwizard/pull/1503>`_
+* Support for unlimited log files for file appender `#1549 <https://github.com/dropwizard/dropwizard/pull/1549>`_
+* Support for log file names determined by logging policy `#1561 <https://github.com/dropwizard/dropwizard/pull/1561>`_
+* Default Graphite reporter port changed from 8080 to 2003 `#1538 <https://github.com/dropwizard/dropwizard/pull/1538>`_
+* Upgraded to Apache HTTP Client 4.5.2
+* Upgraded to argparse4j 0.7.0
+* Upgraded to Guava 19.0
+* Upgraded to H2 1.4.192
+* Upgraded to Hibernate 5.1.0 `#1429 <https://github.com/dropwizard/dropwizard/pull/1429>`_
+* Upgraded to Hibernate Validator 5.2.4.Final
+* Upgraded to HSQLDB 2.3.4
+* Upgraded to Jadira Usertype Core 5.0.0.GA
+* Upgraded to Jackson 2.7.6
+* Upgraded to JDBI 2.73 `#1358 <https://github.com/dropwizard/dropwizard/pull/1358>`_
+* Upgraded to Jersey 2.23.1
+* Upgraded to Jetty 9.3.9.v20160517 `#1330 <https://github.com/dropwizard/dropwizard/pull/1330>`_
+* Upgraded to JMH 1.12
+* Upgraded to Joda-Time 2.9.4
+* Upgraded to Liquibase 3.5.1
+* Upgraded to liquibase-slf4j 2.0.0
+* Upgraded to Logback 1.1.7
+* Upgraded to Mustache 0.9.2
+* Upgraded to SLF4J 1.7.21
+* Upgraded to tomcat-jdbc 8.5.3
+* Upgraded to Objenesis 2.3
+* Upgraded to AssertJ 3.4.1
+* Upgraded to Mockito 2.0.54-beta
+
+.. _rel-0.9.2:
+
+v0.9.2: Jan 20 2016
+===================
+
+* Support `@UnitOfWork` annotation outside of Jersey resources `#1361 <https://github.com/dropwizard/dropwizard/issues/1361>`_
+
+.. _rel-0.9.1:
+
+v0.9.1: Nov 3 2015
+==================
+
+* Add ``ConfigurationSourceProvider`` for reading resources from classpath `#1314 <https://github.com/dropwizard/dropwizard/issues/1314>`_
+* Add ``@UnwrapValidatedValue`` annotation to `BaseReporterFactory.frequency` `#1308 <https://github.com/dropwizard/dropwizard/issues/1308>`_, `#1309 <https://github.com/dropwizard/dropwizard/issues/1309>`_
+* Fix serialization of default configuration for ``DataSourceFactory`` by deprecating ``PooledDataSourceFactory#getHealthCheckValidationQuery()`` and ``PooledDataSourceFactory#getHealthCheckValidationTimeout()`` `#1321 <https://github.com/dropwizard/dropwizard/issues/1321>`_, `#1322 <https://github.com/dropwizard/dropwizard/pull/1322>`_
+* Treat ``null`` values in JAX-RS resource method parameters of type ``Optional<T>`` as absent value after conversion `#1323 <https://github.com/dropwizard/dropwizard/pull/1323>`_
+
+.. _rel-0.9.0:
+
+v0.9.0: Oct 28 2015
+===================
+
+* Various documentation fixes and improvements
+* New filter-based authorization & authentication `#952 <https://github.com/dropwizard/dropwizard/pull/952>`_, `#1023 <https://github.com/dropwizard/dropwizard/pull/1023>`_, `#1114 <https://github.com/dropwizard/dropwizard/pull/1114>`_, `#1162 <https://github.com/dropwizard/dropwizard/pull/1162>`_, `#1241 <https://github.com/dropwizard/dropwizard/pull/1241>`_
+* Fixed a security bug in ``CachingAuthenticator`` with caching results of failed authentication attempts `#1082 <https://github.com/dropwizard/dropwizard/pull/1082>`_
+* Correct handling misconfigured context paths in ``ServerFactory`` `#785 <https://github.com/dropwizard/dropwizard/pull/785>`_
+* Logging context paths during application startup `#994 <https://github.com/dropwizard/dropwizard/pull/994>`_, `#1072 <https://github.com/dropwizard/dropwizard/pull/1072>`_
+* Support for `Jersey Bean Validation <https://jersey.java.net/documentation/latest/bean-validation.html>`_ `#842 <https://github.com/dropwizard/dropwizard/pull/842>`_
+* Returning descriptive constraint violation messages `#1039 <https://github.com/dropwizard/dropwizard/pull/1039>`_,
+* Trace logging of failed constraint violations `#992 <https://github.com/dropwizard/dropwizard/pull/992>`_
+* Returning correct HTTP status codes for constraint violations `#993 <https://github.com/dropwizard/dropwizard/pull/993>`_
+* Fixed possible XSS in constraint violations `#892 <https://github.com/dropwizard/dropwizard/issues/892>`_
+* Support for including caller data in appenders `#995 <https://github.com/dropwizard/dropwizard/pull/995>`_
+* Support for defining custom logging factories (e.g. native Logback) `#996 <https://github.com/dropwizard/dropwizard/pull/996>`_
+* Support for defining the maximum log file size in ``FileAppenderFactory``. `#1000 <https://github.com/dropwizard/dropwizard/pull/1000>`_
+* Support for fixed window rolling policy in ``FileAppenderFactory`` `#1218 <https://github.com/dropwizard/dropwizard/pull/1218>`_
+* Support for individual logger appenders `#1092 <https://github.com/dropwizard/dropwizard/pull/1092>`_
+* Support for disabling logger additivity `#1215 <https://github.com/dropwizard/dropwizard/pull/1215>`_
+* Sorting endpoints in the application startup log `#1002 <https://github.com/dropwizard/dropwizard/pull/1002>`_
+* Dynamic DNS resolution in the Graphite metric reporter `#1004 <https://github.com/dropwizard/dropwizard/pull/1004>`_
+* Support for defining a custom ``MetricRegistry`` during bootstrap (e.g. with HdrHistogram) `#1015 <https://github.com/dropwizard/dropwizard/pull/1015>`_
+* Support for defining a custom ``ObjectMapper`` during bootstrap. `#1112 <https://github.com/dropwizard/dropwizard/pull/1112>`_
+* Added facility to plug-in custom DB connection pools (e.g. HikariCP) `#1030 <https://github.com/dropwizard/dropwizard/pull/1030>`_
+* Support for setting a custom DB pool connection validator `#1113 <https://github.com/dropwizard/dropwizard/pull/1113>`_
+* Support for enabling of removing abandoned DB pool connections `#1264 <https://github.com/dropwizard/dropwizard/pull/1264>`_
+* Support for credentials in a DB data source URL `#1260 <https://github.com/dropwizard/dropwizard/pull/1260>`_
+* Support for simultaneous work of several Hibernate bundles `#1276 <https://github.com/dropwizard/dropwizard/pull/1276>`_
+* HTTP(S) proxy support for Dropwizard HTTP client `#657 <https://github.com/dropwizard/dropwizard/pull/657>`_
+* Support external configuration of TLS properties for Dropwizard HTTP client `#1224 <https://github.com/dropwizard/dropwizard/pull/1224>`_
+* Support for not accepting GZIP-compressed responses in HTTP clients `#1270 <https://github.com/dropwizard/dropwizard/pull/1270>`_
+* Support for setting a custom redirect strategy in HTTP clients `#1281 <https://github.com/dropwizard/dropwizard/pull/1281>`_
+* Apache and Jersey clients are now managed by the application environment `#1061 <https://github.com/dropwizard/dropwizard/pull/1061>`_
+* Support for request-scoped configuration for Jersey client  `#939 <https://github.com/dropwizard/dropwizard/pull/939>`_
+* Respecting Jackson feature for deserializing enums using ``toString`` `#1104 <https://github.com/dropwizard/dropwizard/pull/1104>`_
+* Support for passing explicit ``Configuration`` via test rules `#1131 <https://github.com/dropwizard/dropwizard/pull/1131>`_
+* On view template error, return a generic error page instead of template not found `#1178 <https://github.com/dropwizard/dropwizard/pull/1178>`_
+* In some cases an instance of Jersey HTTP client could be abruptly closed during the application lifetime `#1232 <https://github.com/dropwizard/dropwizard/pull/1232>`_
+* Improved build time build by running tests in parallel `#1032 <https://github.com/dropwizard/dropwizard/pull/1032>`_
+* Added JMH benchmarks  `#990 <https://github.com/dropwizard/dropwizard/pull/990>`_
+* Allow customization of Hibernate ``SessionFactory`` `#1182 <https://github.com/dropwizard/dropwizard/issue/1182>`_
+* Removed javax.el-2.x in favour of javax.el-3.0
+* Upgraded to argparse4j 0.6.0
+* Upgrade to AssertJ 2.2.0
+* Upgraded to JDBI 2.63.1
+* Upgraded to Apache HTTP Client 4.5.1
+* Upgraded to Dropwizard Metrics 3.1.2
+* Upgraded to Freemarker 2.3.23
+* Upgraded to H2 1.4.190
+* Upgraded to Hibernate 4.3.11.Final
+* Upgraded to Jackson 2.6.3
+* Upgraded to Jadira Usertype Core 4.0.0.GA
+* Upgraded to Jersey 2.22.1
+* Upgraded to Jetty 9.2.13.v20150730
+* Upgraded to Joda-Time 2.9
+* Upgraded to JSR305 annotations 3.0.1
+* Upgraded to Hibernate Validator 5.2.2.Final
+* Upgraded to Jetty ALPN boot 7.1.3.v20150130
+* Upgraded to Jetty SetUID support 1.0.3
+* Upgraded to Liquibase 3.4.1
+* Upgraded to Logback 1.1.3
+* Upgraded to Metrics 3.1.2
+* Upgraded to Mockito 1.10.19
+* Upgraded to SLF4J 1.7.12
+* Upgraded to commons-lang3 3.4
+* Upgraded to tomcat-jdbc 8.0.28
+
+.. _rel-0.8.5:
+
+v0.8.5: Nov 3 2015
+==================
+
+* Treat ``null`` values in JAX-RS resource method parameters of type ``Optional<T>`` as absent value after conversion `#1323 <https://github.com/dropwizard/dropwizard/pull/1323>`_
+
+.. _rel-0.8.4:
+
+v0.8.4: Aug 26 2015
+===================
+
+* Upgrade to Apache HTTP Client 4.5
+* Upgrade to Jersey 2.21
+* Fixed user-agent shadowing in Jersey HTTP Client `#1198 <https://github.com/dropwizard/dropwizard/pull/1198>`_
+
+.. _rel-0.8.3:
+
+v0.8.3: Aug 24 2015
+===================
+* Fixed an issue with closing the HTTP client connection pool after a full GC `#1160 <https://github.com/dropwizard/dropwizard/pull/1160>`_
+
+.. _rel-0.8.2:
+
+v0.8.2: Jul 6 2015
+==================
+
+* Support for request-scoped configuration for Jersey client `#1137 <https://github.com/dropwizard/dropwizard/pull/1137>`_
+* Upgraded to Jersey 2.19 `#1143 <https://github.com/dropwizard/dropwizard/pull/1143>`_
+
+.. _rel-0.8.1:
+
+v0.8.1: Apr 7 2015
+==================
+
+* Fixed transaction committing lifecycle for ``@UnitOfWork``  (#850, #915)
+* Fixed noisy Logback messages on startup (#902)
+* Ability to use providers in TestRule, allows testing of auth & views (#513, #922)
+* Custom ExceptionMapper not invoked when Hibernate rollback (#949)
+* Support for setting a time bound on DBI and Hibernate health checks
+* Default configuration for views
+* Ensure that JerseyRequest scoped ClientConfig gets propagated to HttpUriRequest
+* More example tests
+* Fixed security issue where info is leaked during validation of unauthenticated resources(#768)
+
+.. _rel-0.8.0:
+
+v0.8.0: Mar 5 2015
+==================
+
+* Migrated ``dropwizard-spdy`` from NPN to ALPN
+* Dropped support for deprecated SPDY/2 in ``dropwizard-spdy``
+* Upgrade to argparse4j 0.4.4
+* Upgrade to commons-lang3 3.3.2
+* Upgrade to Guava 18.0
+* Upgrade to H2 1.4.185
+* Upgrade to Hibernate 4.3.5.Final
+* Upgrade to Hibernate Validator 5.1.3.Final
+* Upgrade to Jackson 2.5.1
+* Upgrade to JDBI 2.59
+* Upgrade to Jersey 2.16
+* Upgrade to Jetty 9.2.9.v20150224
+* Upgrade to Joda-Time 2.7
+* Upgrade to Liquibase 3.3.2
+* Upgrade to Mustache 0.8.16
+* Upgrade to SLF4J 1.7.10
+* Upgrade to tomcat-jdbc 8.0.18
+* Upgrade to JSR305 annotations 3.0.0
+* Upgrade to Junit 4.12
+* Upgrade to AssertJ 1.7.1
+* Upgrade to Mockito 1.10.17
+* Support for range headers
+* Ability to use Apache client configuration for Jersey client
+* Warning when maximum pool size and unbounded queues are combined
+* Fixed connection leak in CloseableLiquibase
+* Support ScheduledExecutorService with daemon thread
+* Improved DropwizardAppRule
+* Better connection pool metrics
+* Removed final modifier from Application#run
+* Fixed gzip encoding to support Jersey 2.x
+* Configuration to toggle regex [in/ex]clusion for Metrics
+* Configuration to disable default exception mappers
+* Configuration support for disabling chunked encoding
+* Documentation fixes and upgrades
+
+
+.. _rel-0.7.1:
+
+v0.7.1: Jun 18 2014
+===================
+
+* Added instrumentation to ``Task``, using metrics annotations.
+* Added ability to blacklist SSL cipher suites.
+* Added ``@PATCH`` annotation for Jersey resource methods to indicate use of the HTTP ``PATCH`` method.
+* Added support for configurable request retry behavior for ``HttpClientBuilder`` and ``JerseyClientBuilder``.
+* Added facility to get the admin HTTP port in ``DropwizardAppTestRule``.
+* Added ``ScanningHibernateBundle``, which scans packages for entities, instead of requiring you to add them individually.
+* Added facility to invalidate credentials from the ``CachingAuthenticator`` that match a specified ``Predicate``.
+* Added a CI build profile for JDK 8 to ensure that Dropwizard builds against the latest version of the JDK.
+* Added ``--catalog`` and ``--schema`` options to Liquibase.
+* Added ``stackTracePrefix`` configuration option to ``SyslogAppenderFactory`` to configure the pattern prepended to each line in the stack-trace sent to syslog. Defaults to the TAB character, "\t". Note: this is different from the bang prepended to text logs (such as "console", and "file"), as syslog has different conventions for multi-line messages.
+* Added ability to validate ``Optional`` values using validation annotations. Such values require the ``@UnwrapValidatedValue`` annotation, in addition to the validations you wish to use.
+* Added facility to configure the ``User-Agent`` for ``HttpClient``. Configurable via the ``userAgent`` configuration option.
+* Added configurable ``AllowedMethodsFilter``. Configure allowed HTTP methods for both the application and admin connectors with ``allowedMethods``.
+* Added support for specifying a ``CredentialProvider`` for HTTP clients.
+* Fixed silently overriding Servlets or ServletFilters; registering a duplicate will now emit a warning.
+* Fixed ``SyslogAppenderFactory`` failing when the application name contains a PCRE reserved character (e.g. ``/`` or ``$``).
+* Fixed regression causing JMX reporting of metrics to not be enabled by default.
+* Fixed transitive dependencies on log4j and extraneous sl4j backends bleeding in to projects. Dropwizard will now enforce that only Logback and slf4j-logback are used everywhere.
+* Fixed clients disconnecting before the request has been fully received causing a "500 Internal Server Error" to be generated for the request log. Such situations will now correctly generate a "400 Bad Request", as the request is malformed. Clients will never see these responses, but they matter for logging and metrics that were previously considering this situation as a server error.
+* Fixed ``DiscoverableSubtypeResolver`` using the system ``ClassLoader``, instead of the local one.
+* Fixed regression causing Liquibase ``--dump`` to fail to dump the database.
+* Fixed the CSV metrics reporter failing when the output directory doesn't exist. It will now attempt to create the directory on startup.
+* Fixed global frequency for metrics reporters being permanently overridden by the default frequency for individual reporters.
+* Fixed tests failing on Windows due to platform-specific line separators.
+* Changed ``DropwizardAppTestRule`` so that it no longer requires a configuration path to operate. When no path is specified, it will now use the applications' default configuration.
+* Changed ``Bootstrap`` so that ``getMetricsFactory()`` may now be overridden to provide a custom instance to the framework to use.
+* Upgraded to Guava 17.0
+  Note: this addresses a bug with BloomFilters that is incompatible with pre-17.0 BloomFilters.
+* Upgraded to Jackson 2.3.3
+* Upgraded to Apache HttpClient 4.3.4
+* Upgraded to Metrics 3.0.2
+* Upgraded to Logback 1.1.2
+* Upgraded to h2 1.4.178
+* Upgraded to JDBI 2.55
+* Upgraded to Hibernate 4.3.5 Final
+* Upgraded to Hibernate Validator 5.1.1 Final
+* Upgraded to Mustache 0.8.15
+
 .. _rel-0.7.0:
 
-v0.7.0-SNAPSHOT
-===============
+v0.7.0: Apr 04 2014
+===================
 
 * Upgraded to Java 7.
-* Moved to the ``com.codahale`` group ID and namespace.
-* Upgraded to Jetty 9.0.3.
-* Upgraded to Metrics 3.
-* Dropped Scala support.
+* Moved to the ``io.dropwizard`` group ID and namespace.
+* Extracted out a number of reusable libraries: ``dropwizard-configuration``,
+  ``dropwizard-jackson``, ``dropwizard-jersey``, ``dropwizard-jetty``, ``dropwizard-lifecycle``,
+  ``dropwizard-logging``, ``dropwizard-servlets``, ``dropwizard-util``, ``dropwizard-validation``.
+* Extracted out various elements of ``Environment`` to separate classes: ``JerseyEnvironment``,
+  ``LifecycleEnvironment``, etc.
+* Extracted out ``dropwizard-views-freemarker`` and ``dropwizard-views-mustache``.
+  ``dropwizard-views`` just provides infrastructure now.
 * Renamed ``Service`` to ``Application``.
+* Added ``dropwizard-forms``, which provides support for multipart MIME entities.
+* Added ``dropwizard-spdy``.
 * Added ``AppenderFactory``, allowing for arbitrary logging appenders for application and request
   logs.
 * Added ``ConnectorFactory``, allowing for arbitrary Jetty connectors.
 * Added ``ServerFactory``, with multi- and single-connector implementations.
-* Added ``dropwizard-spdy``.
-* Added builders for managed executors.
-* Added a default ``check`` command, which loads and validates the service configuration.
-* Extracted out a number of reusable libraries: ``dropwizard-configuration``,
-  ``dropwizard-jackson``, ``dropwizard-jersey``, ``dropwizard-jetty``, ``dropwizard-lifecycle``,
-  ``dropwizard-logging``, ``dropwizard-servlets``, ``dropwizard-util``, ``dropwizard-validation``.
-* Dropped ``ObjectMapperFactory``; use ``ObjectMapper`` instead.
-* Dropped ``Validator``; use ``javax.validation.Validator`` instead.
-* Changed error handling to depend more heavily on Jersey exception mapping.
-* Validation errors are now returned as ``application/json`` responses.
+* Added ``ReporterFactory``, for metrics reporters, with Graphite and Ganglia implementations.
 * Added ``ConfigurationSourceProvider`` to allow loading configuration files from sources other than
   the filesystem.
+* Added setuid support. Configure the user/group to run as and soft/hard open file limits in the
+  ``ServerFactory``. To bind to privileged ports (e.g. 80), enable ``startsAsRoot`` and set ``user``
+  and ``group``, then start your application as the root user.
+* Added builders for managed executors.
+* Added a default ``check`` command, which loads and validates the service configuration.
+* Added support for the Jersey HTTP client to ``dropwizard-client``.
+* Added Jackson Afterburner support.
+* Added support for ``deflate``-encoded requests and responses.
+* Added support for HTTP Sessions. Add the annotated parameter to your resource method:
+  ``@Session HttpSession session`` to have the session context injected.
+* Added support for a "flash" message to be propagated across requests. Add the annotated parameter
+  to your resource method: ``@Session Flash message`` to have any existing flash message injected.
+* Added support for deserializing Java ``enums`` with fuzzy matching rules (i.e., whitespace
+  stripping, ``-``/``_`` equivalence, case insensitivity, etc.).
 * Added ``HibernateBundle#configure(Configuration)`` for customization of Hibernate configuration.
+* Added support for Joda Time ``DateTime`` arguments and results when using JDBI.
+* Added configuration option to include Exception stack-traces when logging to syslog. Stack traces
+  are now excluded by default.
+* Added the application name and PID (if detectable) to the beginning of syslog messages, as is the
+  convention.
+* Added ``--migrations`` command-line option to ``migrate`` command to supply the migrations
+  file explicitly.
+* Validation errors are now returned as ``application/json`` responses.
 * Simplified ``AsyncRequestLog``; now standardized on Jetty 9 NCSA format.
-* Fixed a shutdown bug in ``dropwizard-migrations``.
-* Extracted out various elements of ``Environment`` to separate classes: ``JerseyEnvironment``,
-  ``LifecycleEnvironment``, etc.
 * Renamed ``DatabaseConfiguration`` to ``DataSourceFactory``, and ``ConfigurationStrategy`` to
   ``DatabaseConfiguration``.
-* Upgraded to JDBI 2.49.
-* Upgraded to Logback 1.0.13.
-* Upgraded to SLF4J 1.7.5.
-* Upgraded to Hibernate Validator 5.0.1.
-* Upgraded to argparse4j 0.4.1.
-* Removed ``ManagedSessionFactory``.
-* Moved ``dropwizard-db`` to use ``tomcat-jdbc`` instead of ``tomcat-dbcp``.
-* Extracted out ``dropwizard-views-freemarker`` and ``dropwizard-views-mustache``.
-  ``dropwizard-views`` just provides infrastructure now.
-* Upgraded to Jackson 2.2.0.
-* Upgraded to Mustache 0.8.12.
-* Added support for the Jetty HTTP client to ``dropwizard-client``.
-* Added Jackson Afterburner support.
-* Added ``dropwizard-forms``, which provides support for multipart MIME entities.
-* Added support for ``deflate``-encoded requests and responses.
+* Changed logging to be asynchronous. Messages are now buffered and batched in-memory before being
+  delivered to the configured appender(s).
+* Changed handling of runtime configuration errors. Will no longer display an Exception stack-trace
+  and will present a more useful description of the problem, including suggestions when appropriate.
+* Changed error handling to depend more heavily on Jersey exception mapping.
+* Changed ``dropwizard-db`` to use ``tomcat-jdbc`` instead of ``tomcat-dbcp``.
+* Changed default formatting when logging nested Exceptions to display the root-cause first.
+* Replaced ``ResourceTest`` with ``ResourceTestRule``, a JUnit ``TestRule``.
+* Dropped Scala support.
+* Dropped ``ManagedSessionFactory``.
+* Dropped ``ObjectMapperFactory``; use ``ObjectMapper`` instead.
+* Dropped ``Validator``; use ``javax.validation.Validator`` instead.
+* Fixed a shutdown bug in ``dropwizard-migrations``.
+* Fixed formatting of "Caused by" lines not being prefixed when logging nested Exceptions.
+* Fixed not all available Jersey endpoints were being logged at startup.
+* Upgraded to argparse4j 0.4.3.
+* Upgraded to Guava 16.0.1.
+* Upgraded to Hibernate Validator 5.0.2.
+* Upgraded to Jackson 2.3.1.
+* Upgraded to JDBI 2.53.
+* Upgraded to Jetty 9.0.7.
+* Upgraded to Liquibase 3.1.1.
+* Upgraded to Logback 1.1.1.
+* Upgraded to Metrics 3.0.1.
+* Upgraded to Mustache 0.8.14.
+* Upgraded to SLF4J 1.7.6.
+* Upgraded to Jersey 1.18.
+* Upgraded to Apache HttpClient 4.3.2.
+* Upgraded to tomcat-jdbc 7.0.50.
+* Upgraded to Hibernate 4.3.1.Final.
 
 .. _rel-0.6.2:
 

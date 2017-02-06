@@ -1,15 +1,16 @@
 package com.example.helloworld.cli;
 
-import com.codahale.dropwizard.cli.ConfiguredCommand;
-import com.codahale.dropwizard.setup.Bootstrap;
 import com.example.helloworld.HelloWorldConfiguration;
 import com.example.helloworld.core.Template;
-import com.google.common.base.Optional;
+import io.dropwizard.cli.ConfiguredCommand;
+import io.dropwizard.setup.Bootstrap;
 import net.sourceforge.argparse4j.impl.Arguments;
 import net.sourceforge.argparse4j.inf.Namespace;
 import net.sourceforge.argparse4j.inf.Subparser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Optional;
 
 public class RenderCommand extends ConfiguredCommand<HelloWorldConfiguration> {
     private static final Logger LOGGER = LoggerFactory.getLogger(RenderCommand.class);
@@ -35,7 +36,7 @@ public class RenderCommand extends ConfiguredCommand<HelloWorldConfiguration> {
         final Template template = configuration.buildTemplate();
 
         if (namespace.getBoolean("include-default")) {
-            LOGGER.info("DEFAULT => {}", template.render(Optional.<String>absent()));
+            LOGGER.info("DEFAULT => {}", template.render(Optional.empty()));
         }
 
         for (String name : namespace.<String>getList("names")) {
